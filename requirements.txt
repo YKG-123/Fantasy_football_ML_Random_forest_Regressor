@@ -3,6 +3,6 @@ pandas
 numpy
 matplotlib
 seaborn
-sklearn
-bs4
-kagglehub
+scikit-learn
+beautifulsoup4
+kaggle
