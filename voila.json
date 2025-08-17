@@ -1,0 +1,7 @@
+{
+  "voila": {
+    "template": "default",
+    "strip_sources": false,
+    "notebook_path": "index.ipynb"
+  }
+}

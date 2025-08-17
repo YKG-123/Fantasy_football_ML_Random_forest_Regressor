@@ -1,8 +1,9 @@
-voila
-pandas
-numpy
-matplotlib
-seaborn
-scikit-learn
-beautifulsoup4
-kaggle
+voila==0.5.2
+pandas==2.2.2
+numpy==1.26.4
+matplotlib==3.8.4
+seaborn==0.13.2
+scikit-learn==1.4.2
+beautifulsoup4==4.12.2
+kagglehub==0.1.5
+scipy==1.13.0
