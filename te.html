@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head><meta charset="utf-8"/>
+<head><title>2025 Fantasy Football Tight End Rankings | Machine Learning Projections</title><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>TE_preseason_postable</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Notebook</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7508,14 +7508,137 @@ a.anchor-link {
     white-space: normal;
   }
 </style>
-<!-- End of mermaid configuration --></head>
+<!-- End of mermaid configuration --><meta content="2025 fantasy football tight end rankings powered by machine learning. Weekly updates and projections." name="description"/><meta content="2025 Fantasy Football Tight End Rankings | Machine Learning Projections" property="og:title"/><meta content="2025 fantasy football tight end rankings powered by machine learning. Weekly updates and projections." property="og:description"/><meta content="https://yourcustomdomain.com//content/Fantasy_football_ML_Random_forest_Regressor/te.html" property="og:url"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "2025 Fantasy Football Tight End Rankings",
+  "description": "2025 fantasy football tight end rankings powered by machine learning. Weekly updates and projections.",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Brock Bowers"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Trey McBride"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "George Kittle"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Travis Kelce"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "Sam LaPorta"
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "name": "Tucker Kraft"
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "name": "Zach Ertz"
+    },
+    {
+      "@type": "ListItem",
+      "position": 8,
+      "name": "Colston Loveland"
+    },
+    {
+      "@type": "ListItem",
+      "position": 9,
+      "name": "Dalton Kincaid"
+    },
+    {
+      "@type": "ListItem",
+      "position": 10,
+      "name": "Isaiah Likely"
+    },
+    {
+      "@type": "ListItem",
+      "position": 11,
+      "name": "Jake Ferguson"
+    },
+    {
+      "@type": "ListItem",
+      "position": 12,
+      "name": "Evan Engram"
+    },
+    {
+      "@type": "ListItem",
+      "position": 13,
+      "name": "Kyle Pitts"
+    },
+    {
+      "@type": "ListItem",
+      "position": 14,
+      "name": "Mark Andrews"
+    },
+    {
+      "@type": "ListItem",
+      "position": 15,
+      "name": "Brenton Strange"
+    },
+    {
+      "@type": "ListItem",
+      "position": 16,
+      "name": "Tyler_Warren"
+    },
+    {
+      "@type": "ListItem",
+      "position": 17,
+      "name": "Cade Otton"
+    },
+    {
+      "@type": "ListItem",
+      "position": 18,
+      "name": "Mike Gesicki"
+    },
+    {
+      "@type": "ListItem",
+      "position": 19,
+      "name": "Dallas Goedert"
+    },
+    {
+      "@type": "ListItem",
+      "position": 20,
+      "name": "TJ Hockenson"
+    },
+    {
+      "@type": "ListItem",
+      "position": 21,
+      "name": "Jonnu Smith"
+    },
+    {
+      "@type": "ListItem",
+      "position": 22,
+      "name": "David Njoku"
+    },
+    {
+      "@type": "ListItem",
+      "position": 23,
+      "name": "Hunter Henry"
+    }
+  ]
+}</script></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><a href="https://colab.research.google.com/github/YKG-123/Fantasy_football_ML_Random_forest_Regressor/blob/main/TE_preseason_postable.ipynb" target="_parent"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"/></a></p>
 </div>
 </div>
@@ -7526,6 +7649,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Mounted at /content/drive
 </pre>
@@ -7539,6 +7663,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>Index(['Unnamed: 0', 'adp', 'player_name', 'fantasy_points_ppr_prev',
        'predicted_target_season', 'touches_prev', 'adp_rank',
@@ -7554,6 +7679,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div class="colab-df-container" id="df-d89076d4-c572-43c7-8e08-23e203e7e0d9">
 <div>
