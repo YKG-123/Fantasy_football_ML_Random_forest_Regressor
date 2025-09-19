@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>TE_preseason_postable</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>QB_preseason_postable</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7516,7 +7516,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><a href="https://colab.research.google.com/github/YKG-123/Fantasy_football_ML_Random_forest_Regressor/blob/main/TE_preseason_postable.ipynb" target="_parent"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"/></a></p>
+<p><a href="https://colab.research.google.com/github/YKG-123/Fantasy_football_ML_Random_forest_Regressor/blob/main/QB_preseason_postable.ipynb" target="_parent"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg"/></a></p>
 </div>
 </div>
 </div>
@@ -7540,10 +7540,14 @@ a.anchor-link {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>Index(['Unnamed: 0', 'adp', 'player_name', 'fantasy_points_ppr_prev',
-       'predicted_target_season', 'touches_prev', 'adp_rank',
-       'predicted_rank'],
-      dtype='object')</pre>
+<pre>Index(['player_name', 'season', 'week', 'offense_snaps', 'offense_pct',
+       'team_offense_snaps_prev', 'birth_year', 'draft_year', 'draft_round',
+       'draft_pick',
+       ...
+       'career_ypg', 'career_average_ppr_ppg', 'career_average_standard_ppg',
+       'adp_true_x', 'player_name_merge', 'predicted_target_season', 'adp',
+       'adp_rank', 'predicted_rank', 'rank_diff'],
+      dtype='object', length=393)</pre>
 </div>
 </div>
 </div>
@@ -7555,7 +7559,7 @@ a.anchor-link {
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<div class="colab-df-container" id="df-d89076d4-c572-43c7-8e08-23e203e7e0d9">
+<div class="colab-df-container" id="df-5910865d-5af4-4703-af68-dc756b92d41a">
 <div>
 <style scoped="">
     .dataframe tbody tr th:only-of-type {
@@ -7585,217 +7589,235 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>Brock Bowers</td>
-<td>26.8</td>
+<td>Lamar Jackson</td>
+<td>21.4</td>
 <td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
-<td>12.150662</td>
+<td>24.746588</td>
 </tr>
 <tr>
 <th>1</th>
-<td>Trey McBride</td>
-<td>31.1</td>
+<td>Josh Allen</td>
+<td>25.1</td>
 <td>2.0</td>
 <td>2.0</td>
 <td>0.0</td>
-<td>11.726042</td>
+<td>24.741648</td>
 </tr>
 <tr>
 <th>2</th>
-<td>George Kittle</td>
-<td>43.1</td>
+<td>Jayden Daniels</td>
+<td>32.6</td>
 <td>3.0</td>
-<td>3.0</td>
-<td>0.0</td>
-<td>9.745512</td>
+<td>4.0</td>
+<td>1.0</td>
+<td>24.729144</td>
 </tr>
 <tr>
 <th>3</th>
-<td>Travis Kelce</td>
-<td>67.7</td>
+<td>Kyler Murray</td>
+<td>82.3</td>
 <td>4.0</td>
-<td>5.0</td>
-<td>1.0</td>
-<td>9.134817</td>
+<td>10.0</td>
+<td>6.0</td>
+<td>24.627884</td>
 </tr>
 <tr>
 <th>4</th>
-<td>Sam LaPorta</td>
-<td>63.2</td>
+<td>Caleb Williams</td>
+<td>103.0</td>
 <td>5.0</td>
-<td>4.0</td>
-<td>-1.0</td>
-<td>9.092665</td>
+<td>13.0</td>
+<td>8.0</td>
+<td>24.316839</td>
 </tr>
 <tr>
 <th>5</th>
-<td>Tucker Kraft</td>
-<td>108.9</td>
+<td>Bo Nix</td>
+<td>70.3</td>
 <td>6.0</td>
-<td>10.0</td>
-<td>4.0</td>
-<td>8.495536</td>
+<td>8.0</td>
+<td>2.0</td>
+<td>24.307509</td>
 </tr>
 <tr>
 <th>6</th>
-<td>Zach Ertz</td>
-<td>143.7</td>
+<td>Patrick Mahomes</td>
+<td>52.6</td>
 <td>7.0</td>
-<td>16.0</td>
-<td>9.0</td>
-<td>8.045169</td>
+<td>7.0</td>
+<td>0.0</td>
+<td>24.172064</td>
 </tr>
 <tr>
 <th>7</th>
-<td>Colston Loveland</td>
-<td>141.8</td>
+<td>Jalen Hurts</td>
+<td>41.5</td>
 <td>8.0</td>
-<td>15.0</td>
-<td>7.0</td>
-<td>7.927975</td>
+<td>5.0</td>
+<td>-3.0</td>
+<td>24.129821</td>
 </tr>
 <tr>
 <th>8</th>
-<td>Dalton Kincaid</td>
-<td>133.6</td>
+<td>Baker Mayfield</td>
+<td>52.0</td>
 <td>9.0</td>
-<td>14.0</td>
-<td>5.0</td>
-<td>7.927336</td>
+<td>6.0</td>
+<td>-3.0</td>
+<td>24.052384</td>
 </tr>
 <tr>
 <th>9</th>
-<td>Isaiah Likely</td>
-<td>155.2</td>
+<td>Brock Purdy</td>
+<td>76.3</td>
 <td>10.0</td>
-<td>19.0</td>
 <td>9.0</td>
-<td>7.718799</td>
+<td>-1.0</td>
+<td>23.383125</td>
 </tr>
 <tr>
 <th>10</th>
-<td>Jake Ferguson</td>
-<td>116.2</td>
+<td>Drake Maye</td>
+<td>112.6</td>
 <td>11.0</td>
-<td>11.0</td>
-<td>0.0</td>
-<td>7.712432</td>
+<td>16.0</td>
+<td>5.0</td>
+<td>23.221005</td>
 </tr>
 <tr>
 <th>11</th>
-<td>Evan Engram</td>
-<td>95.2</td>
+<td>Justin Herbert</td>
+<td>110.2</td>
 <td>12.0</td>
-<td>9.0</td>
-<td>-3.0</td>
-<td>7.595475</td>
+<td>15.0</td>
+<td>3.0</td>
+<td>22.918084</td>
 </tr>
 <tr>
 <th>12</th>
-<td>Kyle Pitts</td>
-<td>145.4</td>
+<td>Geno Smith</td>
+<td>152.0</td>
 <td>13.0</td>
-<td>17.0</td>
-<td>4.0</td>
-<td>7.538184</td>
+<td>22.0</td>
+<td>9.0</td>
+<td>22.520301</td>
 </tr>
 <tr>
 <th>13</th>
-<td>Mark Andrews</td>
-<td>86.7</td>
+<td>C.J. Stroud</td>
+<td>128.6</td>
 <td>14.0</td>
-<td>8.0</td>
-<td>-6.0</td>
-<td>7.424622</td>
+<td>19.0</td>
+<td>5.0</td>
+<td>22.520106</td>
 </tr>
 <tr>
 <th>14</th>
-<td>Brenton Strange</td>
-<td>160.6</td>
+<td>Sam Darnold</td>
+<td>161.8</td>
 <td>15.0</td>
-<td>22.0</td>
-<td>7.0</td>
-<td>7.399732</td>
+<td>24.0</td>
+<td>9.0</td>
+<td>22.073202</td>
 </tr>
 <tr>
 <th>15</th>
-<td>Tyler_Warren</td>
-<td>119.1</td>
+<td>Joe Burrow</td>
+<td>29.2</td>
 <td>16.0</td>
-<td>12.0</td>
-<td>-4.0</td>
-<td>7.384676</td>
+<td>3.0</td>
+<td>-13.0</td>
+<td>21.971269</td>
 </tr>
 <tr>
 <th>16</th>
-<td>Cade Otton</td>
-<td>166.2</td>
+<td>Justin Fields</td>
+<td>104.4</td>
 <td>17.0</td>
-<td>23.0</td>
-<td>6.0</td>
-<td>7.265174</td>
+<td>14.0</td>
+<td>-3.0</td>
+<td>21.380332</td>
 </tr>
 <tr>
 <th>17</th>
-<td>Mike Gesicki</td>
-<td>157.3</td>
+<td>Bryce Young</td>
+<td>154.1</td>
 <td>18.0</td>
-<td>21.0</td>
-<td>3.0</td>
-<td>7.246918</td>
+<td>23.0</td>
+<td>5.0</td>
+<td>21.248810</td>
 </tr>
 <tr>
 <th>18</th>
-<td>Dallas Goedert</td>
-<td>127.8</td>
+<td>Jared Goff</td>
+<td>96.1</td>
 <td>19.0</td>
-<td>13.0</td>
-<td>-6.0</td>
-<td>7.225599</td>
+<td>12.0</td>
+<td>-7.0</td>
+<td>21.174128</td>
 </tr>
 <tr>
 <th>19</th>
-<td>TJ Hockenson</td>
-<td>74.2</td>
+<td>Aaron Rodgers</td>
+<td>162.7</td>
 <td>20.0</td>
-<td>6.0</td>
-<td>-14.0</td>
-<td>7.211935</td>
+<td>25.0</td>
+<td>5.0</td>
+<td>21.099964</td>
 </tr>
 <tr>
 <th>20</th>
-<td>Jonnu Smith</td>
-<td>155.8</td>
+<td>Jordan Love</td>
+<td>121.2</td>
 <td>21.0</td>
-<td>20.0</td>
-<td>-1.0</td>
-<td>7.171426</td>
+<td>17.0</td>
+<td>-4.0</td>
+<td>21.059449</td>
 </tr>
 <tr>
 <th>21</th>
-<td>David Njoku</td>
-<td>79.5</td>
+<td>Matthew Stafford</td>
+<td>145.3</td>
 <td>22.0</td>
-<td>7.0</td>
-<td>-15.0</td>
-<td>7.111563</td>
+<td>21.0</td>
+<td>-1.0</td>
+<td>21.048190</td>
 </tr>
 <tr>
 <th>22</th>
-<td>Hunter Henry</td>
-<td>152.6</td>
+<td>Tua Tagovailoa</td>
+<td>139.8</td>
 <td>23.0</td>
+<td>20.0</td>
+<td>-3.0</td>
+<td>20.527999</td>
+</tr>
+<tr>
+<th>23</th>
+<td>Trevor Lawrence</td>
+<td>124.8</td>
+<td>24.0</td>
 <td>18.0</td>
-<td>-5.0</td>
-<td>7.106488</td>
+<td>-6.0</td>
+<td>20.099889</td>
+</tr>
+<tr>
+<th>24</th>
+<td>Dak Prescott</td>
+<td>85.1</td>
+<td>25.0</td>
+<td>11.0</td>
+<td>-14.0</td>
+<td>19.699018</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="colab-df-buttons">
 <div class="colab-df-container">
-<button class="colab-df-convert" onclick="convertToInteractive('df-d89076d4-c572-43c7-8e08-23e203e7e0d9')" style="display:none;" title="Convert this dataframe to an interactive table.">
+<button class="colab-df-convert" onclick="convertToInteractive('df-5910865d-5af4-4703-af68-dc756b92d41a')" style="display:none;" title="Convert this dataframe to an interactive table.">
 <svg height="24px" viewbox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg">
 <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
 </svg>
@@ -7842,12 +7864,12 @@ a.anchor-link {
   </style>
 <script>
       const buttonEl =
-        document.querySelector('#df-d89076d4-c572-43c7-8e08-23e203e7e0d9 button.colab-df-convert');
+        document.querySelector('#df-5910865d-5af4-4703-af68-dc756b92d41a button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-d89076d4-c572-43c7-8e08-23e203e7e0d9');
+        const element = document.querySelector('#df-5910865d-5af4-4703-af68-dc756b92d41a');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -7865,8 +7887,8 @@ a.anchor-link {
       }
     </script>
 </div>
-<div id="df-23a86a91-a3be-43e5-87a6-36c6efdd9cd6">
-<button class="colab-df-quickchart" onclick="quickchart('df-23a86a91-a3be-43e5-87a6-36c6efdd9cd6')" style="display:none;" title="Suggest charts">
+<div id="df-e212ad89-8a8f-4486-879a-ffbe5111edb7">
+<button class="colab-df-quickchart" onclick="quickchart('df-e212ad89-8a8f-4486-879a-ffbe5111edb7')" style="display:none;" title="Suggest charts">
 <svg height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg">
 <g>
 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
@@ -7979,7 +8001,7 @@ a.anchor-link {
         }
         (() => {
           let quickchartButtonEl =
-            document.querySelector('#df-23a86a91-a3be-43e5-87a6-36c6efdd9cd6 button');
+            document.querySelector('#df-e212ad89-8a8f-4486-879a-ffbe5111edb7 button');
           quickchartButtonEl.style.display =
             google.colab.kernel.accessAllowed ? 'block' : 'none';
         })();
