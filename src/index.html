@@ -2,7 +2,77 @@
 <html>
     <head>
         <title>Fantasy Football Rankings</title>
-        <link rel="stylesheet" href="src/styles.css" />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .container {
+                max-width: 500px;
+                width: 100%;
+            }
+
+            header {
+                text-align: center;
+                margin-bottom: 40px;
+                color: white;
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 10px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+                opacity: 0.9;
+                font-weight: 300;
+            }
+
+            #links {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            #links a {
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                text-decoration: none;
+                display: block;
+                text-align: center;
+                color: #333;
+                font-weight: 600;
+                font-size: 1.2rem;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s, background-color 0.3s;
+            }
+
+            #links a:hover {
+                transform: translateY(-5px);
+                background-color: #f5f5f5;
+            }
+
+            #links a.qb:hover { border-left: 5px solid #f5576c; }
+            #links a.rb:hover { border-left: 5px solid #00f2fe; }
+            #links a.wr:hover { border-left: 5px solid #38f9d7; }
+            #links a.te:hover { border-left: 5px solid #fee140; }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -11,20 +81,12 @@
                 <p class="subtitle">2025 Preseason Player Rankings</p>
             </header>
             
-            <nav id="links">
-                <a href="qb.html" class="position-card qb">
-                    <span class="label">Quarterbacks</span>
-                </a>
-                <a href="rb.html" class="position-card rb">
-                    <span class="label">Running Backs</span>
-                </a>
-                <a href="wr.html" class="position-card wr">
-                    <span class="label">Wide Receivers</span>
-                </a>
-                <a href="te.html" class="position-card te">
-                    <span class="label">Tight Ends</span>
-                </a>
-            </nav>
+            <div id="links">
+                <a href="qb.html" class="qb">QB Preseason Rankings</a>
+                <a href="rb.html" class="rb">RB Preseason Rankings</a>
+                <a href="te.html" class="te">TE Preseason Rankings</a>
+                <a href="wr.html" class="wr">WR Preseason Rankings</a>
+            </div>
         </div>
     </body>
 </html>
