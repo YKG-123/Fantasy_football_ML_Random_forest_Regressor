@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+supabase
+joblib
+python-dotenv
