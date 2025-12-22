@@ -3,3 +3,4 @@ uvicorn
 supabase
 joblib
 python-dotenv
+scikit-learn
