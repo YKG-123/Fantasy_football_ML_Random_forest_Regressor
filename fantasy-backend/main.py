@@ -33,20 +33,20 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 models: Dict[str, Dict[str, Any]] = {
     "QB": {
-        "rookie": joblib.load("qb_rookie.pkl"),
-        "veteran": joblib.load("qb_veteran.pkl"),
+        "rookie": joblib.load("models/qb_rookie.pkl"),
+        "veteran": joblib.load("models/qb_veteran.pkl"),
     },
     "RB": {
-        "rookie": joblib.load("rb_rookie.pkl"),
-        "veteran": joblib.load("rb_veteran.pkl"),
+        "rookie": joblib.load("models/rb_rookie.pkl"),
+        "veteran": joblib.load("models/rb_veteran.pkl"),
     },
     "WR": {
-        "rookie": joblib.load("wr_rookie.pkl"),
-        "veteran": joblib.load("wr_veteran.pkl"),
+        "rookie": joblib.load("models/wr_rookie.pkl"),
+        "veteran": joblib.load("models/wr_veteran.pkl"),
     },
     "TE": {
-        "rookie": joblib.load("te_rookie.pkl"),
-        "veteran": joblib.load("te_veteran.pkl"),
+        "rookie": joblib.load("models/te_rookie.pkl"),
+        "veteran": joblib.load("models/te_veteran.pkl"),
     },
 }
 
