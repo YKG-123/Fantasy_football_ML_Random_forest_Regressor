@@ -90,25 +90,21 @@ def build_qb_rookie_features(player: Dict[str, Any], week: int) -> List[float]:
     Build feature vector for QB rookie model.
     Replace the contents with the exact stats/features you trained on.
     """
-    # EXAMPLE ONLY — change to your real features:
     features = [
-        player.get("college_efficiency", 0.0),
-        player.get("draft_capital", 0.0),
-        player.get("rush_share", 0.0),
-        player.get("team_pass_rate", 0.0),
-        week,  # sometimes week is a feature
+        player.get("adp", 200.0),
+        player.get("draft_ovr", 265.0),
     ]
     return features
 
 def build_qb_veteran_features(player: Dict[str, Any], week: int) -> List[float]:
     """Build feature vector for QB veteran model."""
     features = [
-        player.get("prev_pass_attempts", 0.0),
-        player.get("prev_pass_yards", 0.0),
-        player.get("prev_rush_yards", 0.0),
-        player.get("td_rate", 0.0),
-        player.get("int_rate", 0.0),
-        week,
+        player.get("first_down_pass_prev", 0.0),
+        player.get("team_offense_snaps_prev", 0.0),
+        player.get("rushing_yards_prev", 0.0),
+        player.get("adp", 200.0),
+        player.get("fantasy_points_ppr_prev", 0.0),
+        player.get("passing_yards_prev",0.0)
     ]
     return features
 
@@ -118,57 +114,55 @@ def build_rb_rookie_features(player: Dict[str, Any], week: int) -> List[float]:
         player.get("college_yards_per_route", 0.0),
         player.get("draft_capital", 0.0),
         player.get("team_rush_rate", 0.0),
-        week,
     ]
     return features
 
 def build_rb_veteran_features(player: Dict[str, Any], week: int) -> List[float]:
     """Build feature vector for RB veteran model."""
     features = [
-        player.get("prev_rush_attempts", 0.0),
-        player.get("prev_rush_yards", 0.0),
-        player.get("prev_targets", 0.0),
-        player.get("redzone_touches", 0.0),
-        week,
+        player.get("fantasy_points_ppr_prev", 0.0),
+        player.get("adp", 200.0),
+        player.get("touches_prev", 0.0),
+        player.get("draft_ovr", 265.0),
+        player.get("age", 20.0),
     ]
     return features
 
 def build_wr_rookie_features(player: Dict[str, Any], week: int) -> List[float]:
     """Build feature vector for WR rookie model."""
     features = [
-        player.get("college_target_share", 0.0),
-        player.get("college_aDOT", 0.0),
-        player.get("draft_capital", 0.0),
-        week,
+        player.get("adp", 200.0),
+        player.get("draft_ovr", 265.0),
     ]
     return features
 
 def build_wr_veteran_features(player: Dict[str, Any], week: int) -> List[float]:
     """Build feature vector for WR veteran model."""
     features = [
-        player.get("prev_targets", 0.0),
-        player.get("prev_rec_yards", 0.0),
-        player.get("prev_tds", 0.0),
-        week,
+        player.get("fantasy_points_ppr_prev", 0.0),
+        player.get("adp", 200),
+        player.get("receiving_yards_prev", 0.0),
+        player.get("targets_prev", 0.0),
+        player.get("age", 20.0),
+        player.get("first_down_pass_prev", 0.0),
     ]
     return features
 
 def build_te_rookie_features(player: Dict[str, Any], week: int) -> List[float]:
     """Build feature vector for TE rookie model."""
     features = [
-        player.get("college_target_share", 0.0),
-        player.get("draft_capital", 0.0),
-        week,
+        player.get("adp", 200),
+        player.get("draft_ovr", 25.0),
+        player.get("age", 20.0),
     ]
     return features
 
 def build_te_veteran_features(player: Dict[str, Any], week: int) -> List[float]:
     """Build feature vector for TE veteran model."""
     features = [
-        player.get("prev_targets", 0.0),
-        player.get("prev_rec_yards", 0.0),
-        player.get("redzone_targets", 0.0),
-        week,
+        player.get("adp", 200),
+        player.get("draft_ovr", 265),
+        player.get("age", 20.0),
     ]
     return features
 
