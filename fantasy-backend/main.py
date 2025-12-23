@@ -45,31 +45,39 @@ models: Dict[str, Dict[str, Any]] = {
 # --------------- Request/response models ---------------
 
 class PredictionRequest(BaseModel):
-    player_id: str
+    player_name: str
     week: int
     user_id: Optional[str] = None  # optional, for caching per user
 
 class PredictionResponse(BaseModel):
     player_id: str
+    player_name: str
     week: int
     prediction: float
 
 # --------------- Helpers: Supabase ---------------
 
-def get_player_by_id(player_id: str) -> Dict[str, Any]:
-    """Fetch a single player record from Supabase."""
+def get_player_by_name(player_name: str) -> Dict[str, Any]:
+    """Fetch a single player record from Supabase by name."""
     resp = (
         supabase
         .table("players")
         .select("*")
-        .eq("id", player_id)
+        .ilike("name", player_name)  # Case-insensitive match
         .execute()
     )
 
     if not resp.data:
-        raise HTTPException(status_code=404, detail=f"Player with id {player_id} not found.")
+        raise HTTPException(status_code=404, detail=f"Player with name '{player_name}' not found.")
 
-    # Assuming `id` is unique, take the first row
+    # If multiple players have the same name, take the first one
+    # You might want to add additional logic here to handle duplicates
+    if len(resp.data) > 1:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Multiple players found with name '{player_name}'. Please be more specific."
+        )
+    
     return resp.data[0]
 
 # --------------- Helpers: feature builders ---------------
@@ -233,28 +241,29 @@ def preseason_rankings():
 def predict(req: PredictionRequest):
     """
     Predict fantasy points for a given player and week.
-    - Uses player_id to look up the player in Supabase
+    - Uses player_name to look up the player in Supabase
     - Determines rookie/veteran based on years_of_experience == 0
     - Chooses the correct model (position + rookie/vet)
     - Builds model-specific features
     - Returns a single numeric prediction
     - Optionally caches to Supabase if user_id is provided
     """
-    player = get_player_by_id(req.player_id)
+    player = get_player_by_name(req.player_name)
     prediction_value = predict_for_player_and_week(player, req.week)
 
     # Optional: cache in Supabase
     if req.user_id:
         supabase.table("cached_predictions").insert({
             "user_id": req.user_id,
-            "player_id": req.player_id,
+            "player_id": player["id"],
+            "player_name": player["name"],
             "week": req.week,
             "prediction": prediction_value,
         }).execute()
 
     return PredictionResponse(
-        player_id=req.player_id,
+        player_id=player["id"],
+        player_name=player["name"],
         week=req.week,
         prediction=prediction_value,
     )
-
