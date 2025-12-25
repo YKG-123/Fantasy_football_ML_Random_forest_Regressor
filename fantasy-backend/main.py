@@ -73,55 +73,92 @@ def get_player_by_name(player_name: str, team: Optional[str] = None):
 
     return resp.data[0]
 
-# ---------------- Feature Builders (match your CSV) ----------------
 
-def build_qb_features(player):
+# ---------- QB ----------
+def build_qb_rookie_features(player):
     return [
         player.get("adp", 200.0),
         player.get("draft_ovr", 265.0),
+    ]
+
+def build_qb_veteran_features(player):
+    return [
         player.get("passing_yards_prev", 0.0),
-        player.get("rushing_yards_prev", 0.0),
         player.get("fantasy_points_ppr_prev", 0.0),
-        player.get("first_down_pass_prev", 0.0),
+        player.get("adp", 200.0),
+        player.get("rushing_yards_prev", 0.0),
+        player.get("draft_ovr", 265.0),
+        player.get("qb_dropback_prev",0.0)
         player.get("team_offense_snaps_prev", 0.0),
+        player.get("first_down_pass_prev", 0.0),
     ]
 
-def build_rb_features(player):
+
+# ---------- RB ----------
+def build_rb_rookie_features(player):
     return [
         player.get("adp", 200.0),
         player.get("draft_ovr", 265.0),
+    ]
+
+def build_rb_veteran_features(player):
+    return [
+        player.get("fantasy_points_ppr_prev", 0.0),
+        player.get("adp", 200.0),
         player.get("touches_prev", 0.0),
-        player.get("rushing_yards_prev", 0.0),
-        player.get("fantasy_points_ppr_prev", 0.0),
-        player.get("team_offense_snaps_prev", 0.0),
+        player.get("draft_ovr", 265.0),
+        player.get("age", 20.0),
     ]
 
-def build_wr_features(player):
+
+# ---------- WR ----------
+def build_wr_rookie_features(player):
     return [
         player.get("adp", 200.0),
         player.get("draft_ovr", 265.0),
+    ]
+
+def build_wr_veteran_features(player):
+    return [
+        player.get("fantasy_points_ppr_prev", 0.0),
+        player.get("adp", 200.0),
         player.get("receiving_yards_prev", 0.0),
+        player.get("draft_ovr", 265.0),
         player.get("targets_prev", 0.0),
-        player.get("fantasy_points_ppr_prev", 0.0),
+        player.get("age",20.0),
         player.get("first_down_pass_prev", 0.0),
-        player.get("team_offense_snaps_prev", 0.0),
     ]
 
-def build_te_features(player):
+
+# ---------- TE ----------
+def build_te_rookie_features(player):
     return [
         player.get("adp", 200.0),
         player.get("draft_ovr", 265.0),
-        player.get("receiving_yards_prev", 0.0),
-        player.get("fantasy_points_ppr_prev", 0.0),
-        player.get("first_down_pass_prev", 0.0),
-        player.get("team_offense_snaps_prev", 0.0),
+        player.get("age",20.0)
     ]
 
+def build_te_veteran_features(player):
+    return [
+        player.get("adp", 200.0),
+        player.get("draft_ovr", 265.0),
+        player.get("age",20.0)
+    ]
+
+
+# ---------- Mapping ----------
 FEATURE_BUILDERS = {
-    "QB": build_qb_features,
-    "RB": build_rb_features,
-    "WR": build_wr_features,
-    "TE": build_te_features,
+    ("QB", True): build_qb_rookie_features,
+    ("QB", False): build_qb_veteran_features,
+
+    ("RB", True): build_rb_rookie_features,
+    ("RB", False): build_rb_veteran_features,
+
+    ("WR", True): build_wr_rookie_features,
+    ("WR", False): build_wr_veteran_features,
+
+    ("TE", True): build_te_rookie_features,
+    ("TE", False): build_te_veteran_features,
 }
 
 # ---------------- Prediction Logic ----------------
