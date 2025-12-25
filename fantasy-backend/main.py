@@ -182,8 +182,6 @@ def predict_for_player(player):
     model = models[position][model_type]
     prediction = model.predict([features])[0]
     return float(prediction)
-    # ---------------- API Endpoints ----------------
-
 @app.get("/")
 def root():
     return {"message": "Fantasy backend is running."}
