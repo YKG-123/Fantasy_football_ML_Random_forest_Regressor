@@ -175,8 +175,9 @@ def predict_for_player(player):
     is_rookie = (years == 0)
     model_type = "rookie" if is_rookie else "veteran"
 
-    features = FEATURE_BUILDERS[position](player)
-    model = models[position][model_type]
+feature_builder = FEATURE_BUILDERS[(position, is_rookie)]
+features = feature_builder(player)
+model = models[position][model_type]
 
     prediction = model.predict([features])[0]
     return float(prediction)
