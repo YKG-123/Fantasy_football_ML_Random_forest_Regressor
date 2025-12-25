@@ -4,26 +4,20 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from supabase import create_client
 import joblib
-import os
 from typing import Any, Dict, List, Optional
-
-# --------------- FastAPI app --------------- instantly
 
 app = FastAPI(title="Fantasy Backend API")
 
-# --------------- Supabase setup ---------------
+# ---------------- Supabase Setup ----------------
 
 SUPABASE_URL = "https://octfocmufcukbfhaepjf.supabase.co"
 SUPABASE_KEY = "sb_publishable_5mYG0HDrdEZD0hFZIk-zyg_BarGoaZy"
 
-if not SUPABASE_URL or not SUPABASE_KEY:
-    raise RuntimeError("SUPABASE_URL and SUPABASE_KEY must be set as environment variables.")
-
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-# --------------- Load models ---------------
+# ---------------- Load Models ----------------
 
-models: Dict[str, Dict[str, Any]] = {
+models = {
     "QB": {
         "rookie": joblib.load("models/qb_rookie.pkl"),
         "veteran": joblib.load("models/qb_veteran.pkl"),
@@ -42,173 +36,116 @@ models: Dict[str, Dict[str, Any]] = {
     },
 }
 
-# --------------- Request/response models ---------------
+# ---------------- Request/Response Models ----------------
 
 class PredictionRequest(BaseModel):
     player_name: str
-    week: int
-    user_id: Optional[str] = None  # optional, for caching per user
+    team: Optional[str] = None
 
 class PredictionResponse(BaseModel):
     player_id: str
     player_name: str
-    week: int
     prediction: float
 
-# --------------- Helpers: Supabase ---------------
+# ---------------- Supabase Helpers ----------------
 
-def get_player_by_name(player_name: str) -> Dict[str, Any]:
-    """Fetch a single player record from Supabase by name."""
-    resp = (
+def get_player_by_name(player_name: str, team: Optional[str] = None):
+    query = (
         supabase
         .table("players")
         .select("*")
-        .ilike("name", player_name)  # Case-insensitive match
-        .execute()
+        .ilike("player_name", f"%{player_name}%")
     )
 
-    if not resp.data:
-        raise HTTPException(status_code=404, detail=f"Player with name '{player_name}' not found.")
+    if team:
+        query = query.ilike("team", team)
 
-    # If multiple players have the same name, take the first one
-    # You might want to add additional logic here to handle duplicates
+    resp = query.execute()
+
+    if not resp.data:
+        raise HTTPException(404, f"Player '{player_name}' not found.")
+
     if len(resp.data) > 1:
+        teams = [p.get("team", "Unknown") for p in resp.data]
         raise HTTPException(
-            status_code=400, 
-            detail=f"Multiple players found with name '{player_name}'. Please be more specific."
+            400,
+            f"Multiple players named '{player_name}' found on: {', '.join(teams)}. Add ?team=TEAM."
         )
-    
+
     return resp.data[0]
 
-# --------------- Helpers: feature builders ---------------
-# These are the functions you customize to match how each model was trained.
-# Right now they are stubs with examples; you should replace the contents
-# with the actual fields / transformations you used in training.
+# ---------------- Feature Builders (match your CSV) ----------------
 
-def build_qb_rookie_features(player: Dict[str, Any], week: int) -> List[float]:
-    """
-    Build feature vector for QB rookie model.
-    Replace the contents with the exact stats/features you trained on.
-    """
-    features = [
+def build_qb_features(player):
+    return [
         player.get("adp", 200.0),
         player.get("draft_ovr", 265.0),
-    ]
-    return features
-
-def build_qb_veteran_features(player: Dict[str, Any], week: int) -> List[float]:
-    """Build feature vector for QB veteran model."""
-    features = [
+        player.get("passing_yards_prev", 0.0),
+        player.get("rushing_yards_prev", 0.0),
+        player.get("fantasy_points_ppr_prev", 0.0),
         player.get("first_down_pass_prev", 0.0),
         player.get("team_offense_snaps_prev", 0.0),
-        player.get("rushing_yards_prev", 0.0),
-        player.get("adp", 200.0),
-        player.get("fantasy_points_ppr_prev", 0.0),
-        player.get("passing_yards_prev",0.0)
     ]
-    return features
 
-def build_rb_rookie_features(player: Dict[str, Any], week: int) -> List[float]:
-    """Build feature vector for RB rookie model."""
-    features = [
-        player.get("college_yards_per_route", 0.0),
-        player.get("draft_capital", 0.0),
-        player.get("team_rush_rate", 0.0),
-    ]
-    return features
-
-def build_rb_veteran_features(player: Dict[str, Any], week: int) -> List[float]:
-    """Build feature vector for RB veteran model."""
-    features = [
-        player.get("fantasy_points_ppr_prev", 0.0),
+def build_rb_features(player):
+    return [
         player.get("adp", 200.0),
+        player.get("draft_ovr", 265.0),
         player.get("touches_prev", 0.0),
-        player.get("draft_ovr", 265.0),
-        player.get("age", 20.0),
+        player.get("rushing_yards_prev", 0.0),
+        player.get("fantasy_points_ppr_prev", 0.0),
+        player.get("team_offense_snaps_prev", 0.0),
     ]
-    return features
 
-def build_wr_rookie_features(player: Dict[str, Any], week: int) -> List[float]:
-    """Build feature vector for WR rookie model."""
-    features = [
+def build_wr_features(player):
+    return [
         player.get("adp", 200.0),
         player.get("draft_ovr", 265.0),
-    ]
-    return features
-
-def build_wr_veteran_features(player: Dict[str, Any], week: int) -> List[float]:
-    """Build feature vector for WR veteran model."""
-    features = [
-        player.get("fantasy_points_ppr_prev", 0.0),
-        player.get("adp", 200),
         player.get("receiving_yards_prev", 0.0),
         player.get("targets_prev", 0.0),
-        player.get("age", 20.0),
+        player.get("fantasy_points_ppr_prev", 0.0),
         player.get("first_down_pass_prev", 0.0),
+        player.get("team_offense_snaps_prev", 0.0),
     ]
-    return features
 
-def build_te_rookie_features(player: Dict[str, Any], week: int) -> List[float]:
-    """Build feature vector for TE rookie model."""
-    features = [
-        player.get("adp", 200),
-        player.get("draft_ovr", 25.0),
-        player.get("age", 20.0),
+def build_te_features(player):
+    return [
+        player.get("adp", 200.0),
+        player.get("draft_ovr", 265.0),
+        player.get("receiving_yards_prev", 0.0),
+        player.get("fantasy_points_ppr_prev", 0.0),
+        player.get("first_down_pass_prev", 0.0),
+        player.get("team_offense_snaps_prev", 0.0),
     ]
-    return features
 
-def build_te_veteran_features(player: Dict[str, Any], week: int) -> List[float]:
-    """Build feature vector for TE veteran model."""
-    features = [
-        player.get("adp", 200),
-        player.get("draft_ovr", 265),
-        player.get("age", 20.0),
-    ]
-    return features
-
-# Mapping so we don't write a giant if/else block
 FEATURE_BUILDERS = {
-    ("QB", True): build_qb_rookie_features,
-    ("QB", False): build_qb_veteran_features,
-    ("RB", True): build_rb_rookie_features,
-    ("RB", False): build_rb_veteran_features,
-    ("WR", True): build_wr_rookie_features,
-    ("WR", False): build_wr_veteran_features,
-    ("TE", True): build_te_rookie_features,
-    ("TE", False): build_te_veteran_features,
+    "QB": build_qb_features,
+    "RB": build_rb_features,
+    "WR": build_wr_features,
+    "TE": build_te_features,
 }
 
-# --------------- Core prediction helper ---------------
+# ---------------- Prediction Logic ----------------
 
-def predict_for_player_and_week(player: Dict[str, Any], week: int) -> float:
-    """
-    Decide rookie/vet based on years_of_experience,
-    pick the correct model, build the correct features, and predict.
-    """
+def predict_for_player(player):
     position = player.get("position")
     if position not in models:
-        raise HTTPException(status_code=400, detail=f"Unsupported position: {position}")
+        raise HTTPException(400, f"Unsupported position: {position}")
 
-    years = player.get("years_of_experience")
+    years = player.get("years_exp")
     if years is None:
-        raise HTTPException(status_code=400, detail="Player missing years_of_experience field.")
+        raise HTTPException(400, "Player missing years_exp field.")
 
     is_rookie = (years == 0)
     model_type = "rookie" if is_rookie else "veteran"
 
-    feature_builder = FEATURE_BUILDERS.get((position, is_rookie))
-    if feature_builder is None:
-        raise HTTPException(status_code=400, detail=f"No feature builder for {position}, rookie={is_rookie}")
-
-    features = feature_builder(player, week)
+    features = FEATURE_BUILDERS[position](player)
     model = models[position][model_type]
 
-    # Most sklearn-like models want a 2D array: [features]
     prediction = model.predict([features])[0]
-    # Ensure we return a plain float
     return float(prediction)
 
-# --------------- API endpoints ---------------
+# ---------------- API Endpoints ----------------
 
 @app.get("/")
 def root():
@@ -216,54 +153,15 @@ def root():
 
 @app.get("/players")
 def get_players():
-    """
-    Return all players. Use filters on the frontend to build dropdowns/search.
-    """
-    resp = supabase.table("players").select("*").execute()
-    return resp.data
-
-@app.get("/preseason")
-def preseason_rankings():
-    """
-    Return preseason rankings from the players table,
-    ordered by preseason_rank ascending.
-    """
-    resp = (
-        supabase
-        .table("players")
-        .select("id, name, position, team, preseason_rank, preseason_pts, preseason_tier")
-        .order("preseason_rank", asc=True)
-        .execute()
-    )
-    return resp.data
+    return supabase.table("players").select("*").execute().data
 
 @app.post("/predict", response_model=PredictionResponse)
 def predict(req: PredictionRequest):
-    """
-    Predict fantasy points for a given player and week.
-    - Uses player_name to look up the player in Supabase
-    - Determines rookie/veteran based on years_of_experience == 0
-    - Chooses the correct model (position + rookie/vet)
-    - Builds model-specific features
-    - Returns a single numeric prediction
-    - Optionally caches to Supabase if user_id is provided
-    """
-    player = get_player_by_name(req.player_name)
-    prediction_value = predict_for_player_and_week(player, req.week)
-
-    # Optional: cache in Supabase
-    if req.user_id:
-        supabase.table("cached_predictions").insert({
-            "user_id": req.user_id,
-            "player_id": player["id"],
-            "player_name": player["name"],
-            "week": req.week,
-            "prediction": prediction_value,
-        }).execute()
+    player = get_player_by_name(req.player_name, req.team)
+    prediction_value = predict_for_player(player)
 
     return PredictionResponse(
         player_id=player["id"],
-        player_name=player["name"],
-        week=req.week,
+        player_name=player["player_name"],
         prediction=prediction_value,
     )
