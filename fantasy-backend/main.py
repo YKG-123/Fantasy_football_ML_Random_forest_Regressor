@@ -87,7 +87,6 @@ def build_qb_veteran_features(player):
         player.get("fantasy_points_ppr_prev", 0.0),
         player.get("adp", 200.0),
         player.get("rushing_yards_prev", 0.0),
-        player.get("draft_ovr", 265.0),
         player.get("qb_dropback_prev",0.0),
         player.get("team_offense_snaps_prev", 0.0),
         player.get("first_down_pass_prev", 0.0),
