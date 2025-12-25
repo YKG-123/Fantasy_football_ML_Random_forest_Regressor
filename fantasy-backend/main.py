@@ -43,7 +43,6 @@ class PredictionRequest(BaseModel):
     team: Optional[str] = None
 
 class PredictionResponse(BaseModel):
-    player_id: str
     player_name: str
     prediction: float
 
@@ -161,7 +160,6 @@ def predict(req: PredictionRequest):
     prediction_value = predict_for_player(player)
 
     return PredictionResponse(
-        player_id=player["id"],
         player_name=player["player_name"],
         prediction=prediction_value,
     )
