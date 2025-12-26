@@ -83,7 +83,6 @@ def build_qb_rookie_features(player):
 def build_qb_veteran_features(player):
     return [
         player.get("passing_yards_prev", 0.0),
-        player.get("fantasy_points_ppr_prev", 0.0),
         player.get("adp", 200.0),
         player.get("rushing_yards_prev", 0.0),
         player.get("qb_dropback_prev",0.0),
