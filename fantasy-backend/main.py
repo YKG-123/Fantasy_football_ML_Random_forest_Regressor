@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException,Query
 from pydantic import BaseModel
 from supabase import create_client
 import joblib
@@ -198,3 +197,76 @@ def predict(req: PredictionRequest):
         player_name=player["player_name"],
         prediction=prediction_value,
     )
+@app.get("/rankings")
+def get_rankings(position: Optional[str] = Query(None)):
+    # 1. Get all players
+    players = supabase.table("players").select("*").execute().data
+
+    # 2. Optionally filter by position
+    if position:
+        players = [p for p in players if p.get("position") == position]
+
+    rankings = []
+    for p in players:
+        try:
+            value = predict_for_player(p)
+            rankings.append({
+                "player_name": p["player_name"],
+                "position": p.get("position"),
+                "team": p.get("team"),
+                "prediction": value,
+            })
+        except Exception:
+            # You can log this instead of skipping silently
+            continue
+
+    # 3. Sort by prediction descending (highest value first)
+    rankings.sort(key=lambda x: x["prediction"], reverse=True)
+    return rankings
+
+class TradeRequest(BaseModel):
+    team_a: List[str]
+    team_b: List[str]
+    # optional: league format, scoring, etc. later
+
+
+@app.post("/trade/analyze")
+def analyze_trade(req: TradeRequest):
+    def side_value(names: List[str]):
+        total = 0.0
+        details = []
+        for name in names:
+            player = get_player_by_name(name)
+            value = predict_for_player(player)
+            details.append({
+                "player_name": player["player_name"],
+                "position": player.get("position"),
+                "team": player.get("team"),
+                "prediction": value,
+            })
+            total += value
+        return total, details
+
+    total_a, details_a = side_value(req.team_a)
+    total_b, details_b = side_value(req.team_b)
+
+    diff = total_a - total_b
+    if diff > 0:
+        winner = "team_a"
+    elif diff < 0:
+        winner = "team_b"
+    else:
+        winner = "even"
+
+    return {
+        "team_a": {
+            "total_value": total_a,
+            "players": details_a,
+        },
+        "team_b": {
+            "total_value": total_b,
+            "players": details_b,
+        },
+        "difference": diff,
+        "better_side": winner,
+    }
